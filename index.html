@@ -42,21 +42,22 @@
 			    ctx.fill();
 			}
 
-			function drawPoint(angle,distance,label){
+			function drawLetterAt(angle,distance,label){
 			    var point = pointFor(angle, distance)
+			    var letterPoint = pointFor(angle, distance+0.3)
 
 			    drawDotAt(point);
 
 			    ctx.font = font_size;
-			    ctx.fillText(label,point.x + 10,point.y);
+			    ctx.fillText(label,letterPoint.x,letterPoint.y);
 			}
 
 			//Execution
 			drawCircle();
-			drawPoint(95,1,"A");
-			drawPoint(90,1.5,"B");
-			drawPoint(180,1,"C");
-			drawPoint(45,0.5,"D");
+			drawLetterAt(0,1,"A");
+			drawLetterAt(90,1,"B");
+			drawLetterAt(180,1,"C");
+			drawLetterAt(270,1,"D");
 
 
 		</script>
