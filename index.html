@@ -15,6 +15,7 @@
 	};
 
 			//Define Variables
+			var alphabet = String.fromCharCode(...Array(91).keys()).slice(65);
 			var radius = 80;
 			var point_size = 4;
 			var center_x = 150;
@@ -51,6 +52,17 @@
 			    ctx.font = font_size;
 			    ctx.fillText(label,letterPoint.x,letterPoint.y);
 			}
+
+			function letterAt(index) {
+			    return String.fromCharCode(index);
+			}
+
+
+			// for (var i = 0; i < 23; i++) {
+			// 	console.log(letterAt(i));
+
+			// };
+
 
 			//Execution
 			drawCircle();
