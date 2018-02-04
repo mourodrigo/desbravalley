@@ -4,6 +4,10 @@
 	</head>
 	<body>
 		<canvas id="myCanvas" width="300" height="300">Your browser does not support the HTML5 canvas tag.</canvas>
+		<form>
+		  Digite o nome aqui:<br>
+		  <input type="text" id="input" name="input" placeholder="nome aqui">
+		</form>
 	</body>
 	<script type="text/javascript">
 
@@ -28,7 +32,6 @@
 
 			    ctx.font = font_size;
 			    ctx.fillText(this.letterLabel,this.labelPoint.x,this.labelPoint.y);
-
   		}
 
 
@@ -101,8 +104,23 @@
 			//Execution
 			// drawCircle();
 
-
 		</script>
+		<script>
+			var input = document.querySelector('input');
+
+			input.addEventListener('input', function()
+			{
+			    console.log('input changed to: ', input.value);
+			});
+			 //    function update(){
+				//     var value = document.getElementById("name").value;
+				//     console.log(value);
+				// }
+		</script>
+
+
+
+
 </html>
 
 <!-- TODO
@@ -110,7 +128,7 @@
 	RETORNAR O PONTO XY DE UM ANGULO - DONE
 	MONTAR O ARRAY DO ALFABETO - DONE
 	PREENCHER O CIRCULO DE UMA COR
-	DESENHAR LINHAS DE UM PONTO A OUTRO
+	DESENHAR LINHAS DE UM PONTO A OUTRO - DONE
 	ADICIONAR INPUT DE TEXTO
 	PARA CADA LETRA DO INPUT DESENHAR A LINHA
 	EXPORTAR CANVAS
