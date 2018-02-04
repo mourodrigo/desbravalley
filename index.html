@@ -14,8 +14,29 @@
   		}
 	};
 
+	var pointLetter = class pointLetter {
+  		constructor(letterLabel, dotPoint, labelPoint) { 
+		    this.letterLabel = letterLabel;
+		    this.dotPoint = dotPoint;
+		    this.labelPoint = labelPoint;
+  		}
+
+  		draw() {
+			    ctx.beginPath();
+			    ctx.arc(this.dotPoint.x, this.dotPoint.y, point_size, 0, 2 * Math.PI);
+			    ctx.fill();
+
+			    ctx.font = font_size;
+			    ctx.fillText(this.letterLabel,this.labelPoint.x,this.labelPoint.y);
+
+  		}
+
+
+	};
 			//Define Variables
-			var alphabet = String.fromCharCode(...Array(91).keys()).slice(65);
+			var alphabet = String.fromCharCode(...Array(91).keys()).slice(65) + "1234567890";
+			var defaultLetterLabelDistance = 0.3;
+			var pointLetters = [];
 			var radius = 80;
 			var point_size = 4;
 			var center_x = 150;
@@ -32,8 +53,8 @@
 			}
 
 			function pointFor(angle,distance){
-			    var x = center_x + radius * Math.cos(-angle*Math.PI/180) * distance;
-			    var y = center_y + radius * Math.sin(-angle*Math.PI/180) * distance;
+			    var x = center_x + radius * Math.cos(+angle*Math.PI/180) * distance;
+			    var y = center_y + radius * Math.sin(+angle*Math.PI/180) * distance;
 				return new point(x,y);
 			}
 
@@ -44,8 +65,8 @@
 			}
 
 			function drawLetterAt(angle,distance,label){
-			    var point = pointFor(angle, distance)
-			    var letterPoint = pointFor(angle, distance+0.3)
+			    var point = pointFor(angle, distance);
+			    var letterPoint = pointFor(angle, distance+0.3);
 
 			    drawDotAt(point);
 
@@ -57,19 +78,21 @@
 			    return String.fromCharCode(index);
 			}
 
+			for (var i = 0; i < alphabet.length; i++) {
+				// console.log(alphabet.charAt(i));
+				var aLetter = new pointLetter(
+					alphabet.charAt(i),
+					pointFor(360/alphabet.length*i,1),
+					pointFor(360/alphabet.length*i,1+defaultLetterLabelDistance),
+				);
+				pointLetters.push(aLetter);
+				aLetter.draw();
+			};
 
-			// for (var i = 0; i < 23; i++) {
-			// 	console.log(letterAt(i));
-
-			// };
-
+			console.log(pointLetters);
 
 			//Execution
-			drawCircle();
-			drawLetterAt(0,1,"A");
-			drawLetterAt(90,1,"B");
-			drawLetterAt(180,1,"C");
-			drawLetterAt(270,1,"D");
+			// drawCircle();
 
 
 		</script>
