@@ -1,13 +1,17 @@
 <html>
 	<head>
-
+		<script src="jscolor.js"></script>
 	</head>
 	<body>
+		<center>
 		<canvas id="myCanvas" width="300" height="300">Your browser does not support the HTML5 canvas tag.</canvas>
 		<form>
 		  Digite o nome aqui:<br>
 		  <input type="text" id="input" name="input" placeholder="nome aqui">
 		</form>
+			Color: <input class="jscolor" onchange="update(this.jscolor)" value="cc66ff"><br><br>
+		  <button onclick="submitButton()">Gerar</button>
+
 	</body>
 	<script type="text/javascript">
 
@@ -37,14 +41,15 @@
 
 	};
 			//Define Variables
-			var alphabet = String.fromCharCode(...Array(91).keys()).slice(65) + "1234567890";
+			var alphabet = "JKLMNOPQRSTUVWXYZ1234567890ABCDEFGHI";
 			var defaultLetterLabelDistance = 0.3;
 			var pointLetters = [];
-			var radius = 80;
+			var radius = 85;
 			var point_size = 4;
 			var center_x = 150;
 			var center_y = 150;
 			var font_size = "20px";
+			var strokeColor = "000000";
 
 			var c = document.getElementById("myCanvas");
 			var ctx = c.getContext("2d");
@@ -93,29 +98,58 @@
 				ctx.beginPath();
 				ctx.moveTo(from.dotPoint.x,from.dotPoint.y);
 				ctx.lineWidth=5;
-				ctx.strokeStyle = '#ff0000';
+				ctx.strokeStyle = "#"+strokeColor;
 				ctx.lineTo(to.dotPoint.x,to.dotPoint.y);
 				ctx.stroke();
 			}
 
-			drawAlphabet();
-			drawLine(pointLetters[0],pointLetters[10]);
+			function submitButton(){
+				ctx.clearRect(0, 0, 300, 300);
+				drawAlphabet();
+				var input = document.querySelector('input');
+				generateDraw(input.value.toUpperCase());
+
+			}
+
+			function generateDraw(string){
+				var last = -1
+				for (var i = 0; i < string.length; i++) {
+					var res = string.substring(i, i+1);
+					var index = alphabet.indexOf(res);
+					if (index>0) {
+						if (last>=0) {//do the magic
+							console.log("from ", last," to ", index);
+							drawLine(pointLetters[last],pointLetters[index]);
+						};
+						last = index;
+					};
+				};
+
+
+			}
 
 			//Execution
 			// drawCircle();
+			drawAlphabet();
 
 		</script>
+
 		<script>
 			var input = document.querySelector('input');
 
 			input.addEventListener('input', function()
 			{
-			    console.log('input changed to: ', input.value);
+				var inputValue = input.value
+			    console.log('input changed to: ', inputValue);
 			});
-			 //    function update(){
-				//     var value = document.getElementById("name").value;
-				//     console.log(value);
-				// }
+
+			function update(jscolor) {
+		    // 'jscolor' instance can be used as a string
+			     strokeColor = jscolor;
+			     submitButton();
+			}
+
+
 		</script>
 
 
