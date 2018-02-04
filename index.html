@@ -74,22 +74,29 @@
 			    ctx.fillText(label,letterPoint.x,letterPoint.y);
 			}
 
-			function letterAt(index) {
-			    return String.fromCharCode(index);
+			function drawAlphabet() {
+				for (var i = 0; i < alphabet.length; i++) {
+					var aLetter = new pointLetter(
+						alphabet.charAt(i),
+						pointFor(360/alphabet.length*i,1),
+						pointFor(360/alphabet.length*i,1+defaultLetterLabelDistance),
+					);
+					pointLetters.push(aLetter);
+					aLetter.draw();
+				};
 			}
 
-			for (var i = 0; i < alphabet.length; i++) {
-				// console.log(alphabet.charAt(i));
-				var aLetter = new pointLetter(
-					alphabet.charAt(i),
-					pointFor(360/alphabet.length*i,1),
-					pointFor(360/alphabet.length*i,1+defaultLetterLabelDistance),
-				);
-				pointLetters.push(aLetter);
-				aLetter.draw();
-			};
+			function drawLine(from, to){
+				ctx.beginPath();
+				ctx.moveTo(from.dotPoint.x,from.dotPoint.y);
+				ctx.lineWidth=5;
+				ctx.strokeStyle = '#ff0000';
+				ctx.lineTo(to.dotPoint.x,to.dotPoint.y);
+				ctx.stroke();
+			}
 
-			console.log(pointLetters);
+			drawAlphabet();
+			drawLine(pointLetters[0],pointLetters[10]);
 
 			//Execution
 			// drawCircle();
@@ -100,8 +107,8 @@
 
 <!-- TODO
 	TAMANHO DO CANVAS DINAMICO
-	RETORNAR O PONTO XY DE UM ANGULO
-	MONTAR O ARRAY DO ALFABETO
+	RETORNAR O PONTO XY DE UM ANGULO - DONE
+	MONTAR O ARRAY DO ALFABETO - DONE
 	PREENCHER O CIRCULO DE UMA COR
 	DESENHAR LINHAS DE UM PONTO A OUTRO
 	ADICIONAR INPUT DE TEXTO
