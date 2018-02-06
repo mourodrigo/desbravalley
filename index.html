@@ -1,20 +1,56 @@
 <html>
 	<head>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<!-- Jquery -->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+		<!-- Compiled and minified CSS -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+		<!-- Compiled and minified JavaScript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
+		<!-- Color picker -->
 		<script src="jscolor.js"></script>
+
+		<script src="particles.js"></script>
+	
+		<style type="text/css">
+			body {
+			}
+
+			.container {
+			    max-width: 800px;  
+			    padding-left: 25px; 
+			    padding-right: 25px; 
+			}
+
+			#result{
+				color: teal;
+			}
+
+			#particles-js {
+			  position: fixed;
+			  width: 100%;
+			  height: 100%;
+			  z-index: -1;
+			}
+		</style>
 	</head>
 	<body>
 		<center>
-			<div id="canvasdiv" style="margin: 5px; height: 400px; width: 100%;">
-				<canvas id="myCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
+			<div id="particles-js"></div>
+			<div class="container">
+				<div id="canvasdiv" style="margin: 5px; height: 400px; width: 100%;">
+					<canvas id="myCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
+				</div>
+				<form>
+				  <input type="text" id="input" name="input" placeholder="Digite o nome aqui">
+				</form>
+					Selecione a cor<br>
+					<input class="jscolor" onchange="update(this.jscolor)" value="000000"><br><br>
+				  <button onclick="submitButton()" title="Por enquanto nao funciona no Google Chrome, malz aí...">Gerar imagem</button>
 			</div>
-		<form>
-		  Digite o nome aqui:<br>
-		  <input type="text" id="input" name="input" placeholder="nome aqui">
-		</form>
-			Color: <input class="jscolor" onchange="update(this.jscolor)" value="cc66ff"><br><br>
-		  <button onclick="submitButton()">Gerar</button>
-
+		</center>
 	</body>
 	<script type="text/javascript">
 
@@ -164,12 +200,13 @@
 			     refresh();
 			}
 
+			/* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
+			particlesJS.load('particles-js', 'assets/particles.json', function() {
+			  console.log('callback - particles.js config loaded');
+			});
+
 
 		</script>
-
-
-
-
 </html>
 
 <!-- TODO
