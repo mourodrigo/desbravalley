@@ -1,10 +1,13 @@
 <html>
 	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="jscolor.js"></script>
 	</head>
 	<body>
 		<center>
-		<canvas id="myCanvas" width="300" height="300">Your browser does not support the HTML5 canvas tag.</canvas>
+			<div id="canvasdiv" style="margin: 5px; height: 400px; width: 100%;">
+				<canvas id="myCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
+			</div>
 		<form>
 		  Digite o nome aqui:<br>
 		  <input type="text" id="input" name="input" placeholder="nome aqui">
@@ -46,13 +49,22 @@
 			var pointLetters = [];
 			var radius = 85;
 			var point_size = 4;
-			var center_x = 150;
-			var center_y = 150;
 			var font_size = "20px";
 			var strokeColor = "000000";
 
+
+			var $canvasDiv = $('#canvasdiv');
+
 			var c = document.getElementById("myCanvas");
+			c.height = $canvasDiv.innerHeight();
+			c.width = $canvasDiv.innerWidth();
+
+
+			var center_x = c.width/2;
+			var center_y = c.height/2;
+
 			var ctx = c.getContext("2d");
+
 
 			function drawCircle(){
 			    ctx.beginPath();
@@ -103,12 +115,16 @@
 				ctx.stroke();
 			}
 
-			function submitButton(){
-				ctx.clearRect(0, 0, 300, 300);
+			function refresh(){
+				ctx.clearRect(0, 0, c.width, c.height);
 				drawAlphabet();
 				var input = document.querySelector('input');
 				generateDraw(input.value.toUpperCase());
+			}
 
+			function submitButton(){
+				refresh();
+				 window.location = c.toDataURL("image/png");
 			}
 
 			function generateDraw(string){
@@ -118,13 +134,11 @@
 					var index = alphabet.indexOf(res);
 					if (index>0) {
 						if (last>=0) {//do the magic
-							console.log("from ", last," to ", index);
 							drawLine(pointLetters[last],pointLetters[index]);
 						};
 						last = index;
 					};
 				};
-
 
 			}
 
@@ -141,12 +155,13 @@
 			{
 				var inputValue = input.value
 			    console.log('input changed to: ', inputValue);
+			    refresh();
 			});
 
 			function update(jscolor) {
 		    // 'jscolor' instance can be used as a string
 			     strokeColor = jscolor;
-			     submitButton();
+			     refresh();
 			}
 
 
@@ -163,6 +178,6 @@
 	MONTAR O ARRAY DO ALFABETO - DONE
 	PREENCHER O CIRCULO DE UMA COR
 	DESENHAR LINHAS DE UM PONTO A OUTRO - DONE
-	ADICIONAR INPUT DE TEXTO
-	PARA CADA LETRA DO INPUT DESENHAR A LINHA
+	ADICIONAR INPUT DE TEXTO - DONE
+	PARA CADA LETRA DO INPUT DESENHAR A LINHA - DONE
 	EXPORTAR CANVAS
