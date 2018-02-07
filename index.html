@@ -16,6 +16,7 @@
 	
 		<style type="text/css">
 			body {
+			
 			}
 
 			.container {
@@ -34,13 +35,30 @@
 			  height: 100%;
 			  z-index: -1;
 			}
+
+			#footer {
+				position: absolute;
+			  	right: 0;
+			  	bottom: 0;
+			  	left: 0;
+			  	text-align: right;
+			  	padding: 0.5em;
+			}
+
+			a {
+				color: inherit;
+			}
+
+			p {
+				color: #cccccc;
+			}
 		</style>
 	</head>
 	<body>
 		<center>
 			<div id="particles-js"></div>
 			<div class="container">
-				<div id="canvasdiv" style="margin: 5px; height: 400px; width: 100%;">
+				<div id="canvasdiv" style="margin: 5px; height: 600px; width: 100%;">
 					<canvas id="myCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
 				</div>
 				<form>
@@ -51,6 +69,7 @@
 				  <button onclick="submitButton()" title="Por enquanto nao funciona no Google Chrome, malz aí...">Gerar imagem</button>
 			</div>
 		</center>
+				  <p id="footer">Developed by <strong><a href="http://mourodrigo.com">mourodrigo.com</a></strong></p>
 	</body>
 	<script type="text/javascript">
 
@@ -81,12 +100,13 @@
 	};
 			//Define Variables
 			var alphabet = "JKLMNOPQRSTUVWXYZ1234567890ABCDEFGHI";
-			var defaultLetterLabelDistance = 0.3;
+			var defaultLetterLabelDistance = 0.1;
 			var pointLetters = [];
-			var radius = 85;
+			var radius = 250;
 			var point_size = 4;
 			var font_size = "20px";
 			var strokeColor = "000000";
+			var fillColor = 'green';
 
 
 			var $canvasDiv = $('#canvasdiv');
@@ -103,9 +123,12 @@
 
 
 			function drawCircle(){
-			    ctx.beginPath();
-			    ctx.arc(center_x, center_y, radius, 0, 2 * Math.PI);
-			    ctx.stroke();
+				var ctx2 = c.getContext("2d");
+			    ctx2.beginPath();
+			    ctx2.arc(center_x, center_y, radius, 0, 2 * Math.PI);
+			    ctx2.fillStyle = fillColor;
+			    ctx2.fill();
+				ctx2.lineWidth=0;
 			}
 
 			function pointFor(angle,distance){
@@ -116,6 +139,7 @@
 
 			function drawDotAt(point) {
 			    ctx.beginPath();
+				ctx.fillColor = "black";
 			    ctx.arc(point.x, point.y, point_size, 0, 2 * Math.PI);
 			    ctx.fill();
 			}
@@ -154,12 +178,16 @@
 			function refresh(){
 				ctx.clearRect(0, 0, c.width, c.height);
 				drawAlphabet();
+    			drawCircle();
 				var input = document.querySelector('input');
 				generateDraw(input.value.toUpperCase());
 			}
 
 			function submitButton(){
-				refresh();
+				ctx.clearRect(0, 0, c.width, c.height);
+				var input = document.querySelector('input');
+				drawCircle();
+				generateDraw(input.value.toUpperCase());	
 				 window.location = c.toDataURL("image/png");
 			}
 
@@ -179,7 +207,6 @@
 			}
 
 			//Execution
-			// drawCircle();
 			drawAlphabet();
 
 		</script>
