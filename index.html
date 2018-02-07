@@ -66,7 +66,7 @@
 				</form>
 					Selecione a cor<br>
 					<input class="jscolor" onchange="update(this.jscolor)" value="000000"><br><br>
-				  <button onclick="submitButton()" title="Por enquanto nao funciona no Google Chrome, malz aí...">Gerar imagem</button>
+				  <button class="waves-effect waves-light btn" onclick="submitButton()" title="Por enquanto nao funciona no Google Chrome, malz aí..." >Gerar imagem</button>
 			</div>
 		</center>
 				  <p id="footer">Developed by <strong><a href="http://mourodrigo.com">mourodrigo.com</a></strong></p>
@@ -99,10 +99,12 @@
 
 	};
 			//Define Variables
-			var alphabet = "JKLMNOPQRSTUVWXYZ1234567890ABCDEFGHI";
+			var alphabet = "GHIJKLMNOPQRSTUVWXYZABCDEF";
+			var numbers = "1234567890";
 			var defaultLetterLabelDistance = 0.1;
 			var pointLetters = [];
-			var radius = 250;
+			var radius_circle_1 = 250;
+			var radius_circle_2 = 80;
 			var point_size = 4;
 			var font_size = "20px";
 			var strokeColor = "000000";
@@ -122,16 +124,16 @@
 			var ctx = c.getContext("2d");
 
 
-			function drawCircle(){
+			function drawCircle(radius){
 				var ctx2 = c.getContext("2d");
 			    ctx2.beginPath();
 			    ctx2.arc(center_x, center_y, radius, 0, 2 * Math.PI);
 			    ctx2.fillStyle = fillColor;
-			    ctx2.fill();
-				ctx2.lineWidth=0;
+			    // ctx2.fill();
+				// ctx2.lineWidth=3;
 			}
 
-			function pointFor(angle,distance){
+			function pointFor(radius, angle,distance){
 			    var x = center_x + radius * Math.cos(+angle*Math.PI/180) * distance;
 			    var y = center_y + radius * Math.sin(+angle*Math.PI/180) * distance;
 				return new point(x,y);
@@ -144,9 +146,9 @@
 			    ctx.fill();
 			}
 
-			function drawLetterAt(angle,distance,label){
-			    var point = pointFor(angle, distance);
-			    var letterPoint = pointFor(angle, distance+0.3);
+			function drawLetterAt(radius, angle,distance,label){
+			    var point = pointFor(radius, angle, distance);
+			    var letterPoint = pointFor(radius, angle, distance+0.3);
 
 			    drawDotAt(point);
 
@@ -158,8 +160,20 @@
 				for (var i = 0; i < alphabet.length; i++) {
 					var aLetter = new pointLetter(
 						alphabet.charAt(i),
-						pointFor(360/alphabet.length*i,1),
-						pointFor(360/alphabet.length*i,1+defaultLetterLabelDistance),
+						pointFor(radius_circle_1, 360/alphabet.length*i,1),
+						pointFor(radius_circle_1, 360/alphabet.length*i,1+defaultLetterLabelDistance),
+					);
+					pointLetters.push(aLetter);
+					aLetter.draw();
+				};
+			}
+
+			function drawNumbers() {
+				for (var i = 0; i < numbers.length; i++) {
+					var aLetter = new pointLetter(
+						numbers.charAt(i),
+						pointFor(radius_circle_2, 360/numbers.length*i,1),
+						pointFor(radius_circle_2, 360/numbers.length*i,1+defaultLetterLabelDistance+0.15),
 					);
 					pointLetters.push(aLetter);
 					aLetter.draw();
@@ -167,6 +181,7 @@
 			}
 
 			function drawLine(from, to){
+				console.log("drawline from ", from, " to ", to);
 				ctx.beginPath();
 				ctx.moveTo(from.dotPoint.x,from.dotPoint.y);
 				ctx.lineWidth=5;
@@ -176,9 +191,11 @@
 			}
 
 			function refresh(){
+				pointLetters = [];
 				ctx.clearRect(0, 0, c.width, c.height);
 				drawAlphabet();
-    			drawCircle();
+				drawNumbers();
+    			drawCircle(radius_circle_1);
 				var input = document.querySelector('input');
 				generateDraw(input.value.toUpperCase());
 			}
@@ -186,7 +203,7 @@
 			function submitButton(){
 				ctx.clearRect(0, 0, c.width, c.height);
 				var input = document.querySelector('input');
-				drawCircle();
+				drawCircle(radius_circle_1);
 				generateDraw(input.value.toUpperCase());	
 				 window.location = c.toDataURL("image/png");
 			}
@@ -195,19 +212,23 @@
 				var last = -1
 				for (var i = 0; i < string.length; i++) {
 					var res = string.substring(i, i+1);
+
 					var index = alphabet.indexOf(res);
-					if (index>0) {
+					var indexnumber = numbers.indexOf(res);
+					var next = ((index > 0 || indexnumber > 0) && (index > 0 && indexnumber < 0)) ? index : alphabet.length + indexnumber;
+
+					if (next>0) {
 						if (last>=0) {//do the magic
-							drawLine(pointLetters[last],pointLetters[index]);
+							drawLine(pointLetters[last],pointLetters[next]);
 						};
-						last = index;
+						last = next;
 					};
 				};
-
 			}
 
 			//Execution
-			drawAlphabet();
+			refresh();
+			console.log(pointLetters);
 
 		</script>
 
