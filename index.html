@@ -110,7 +110,7 @@
 
 	};
 			// and after that, the variables was born
-			var alphabet = "GHIJKLMNOPQRSTUVWXYZABCDEF";
+			var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 			var numbers = "1234567890";
 			var defaultLetterLabelDistance = 0.1;
 			var pointLetters = [];
@@ -166,11 +166,12 @@
 			}
 
 			function drawAlphabet() { // drawing the beauty of the alphabet
+				var offsetAngle = -92;
 				for (var i = 0; i < alphabet.length; i++) {
 					var aLetter = new pointLetter(
 						alphabet.charAt(i),
-						pointFor(radius_circle_1, 360/alphabet.length*i,1),
-						pointFor(radius_circle_1, 360/alphabet.length*i,1+defaultLetterLabelDistance),
+						pointFor(radius_circle_1, (360/alphabet.length*i)+offsetAngle,1),
+						pointFor(radius_circle_1, (360/alphabet.length*i)+offsetAngle,1+defaultLetterLabelDistance),
 					);
 					pointLetters.push(aLetter);
 					aLetter.draw();
@@ -178,11 +179,12 @@
 			}
 
 			function drawNumbers() { // and after that, the numbers
+				var offsetAngle = -55;
 				for (var i = 0; i < numbers.length; i++) {
 					var aLetter = new pointLetter(
 						numbers.charAt(i),
-						pointFor(radius_circle_2, 360/numbers.length*i,1),
-						pointFor(radius_circle_2, 360/numbers.length*i,1+defaultLetterLabelDistance+0.15),
+						pointFor(radius_circle_2, (360/numbers.length*i)+offsetAngle,1),
+						pointFor(radius_circle_2, (360/numbers.length*i)+offsetAngle,1+defaultLetterLabelDistance+0.15),
 					);
 					pointLetters.push(aLetter);
 					aLetter.draw();
