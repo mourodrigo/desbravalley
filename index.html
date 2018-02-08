@@ -103,8 +103,8 @@
 			    ctx.arc(this.dotPoint.x, this.dotPoint.y, point_size, 0, 2 * Math.PI);
 			    ctx.fill();
 
-			    ctx.font = font_size;
-			    ctx.fillText(this.letterLabel,this.labelPoint.x,this.labelPoint.y);
+			    // ctx.font = font_size;
+			    // ctx.fillText(this.letterLabel,this.labelPoint.x,this.labelPoint.y);
   		}
 
 
@@ -162,7 +162,7 @@
 			    drawDotAt(point);
 
 			    ctx.font = font_size;
-			    // ctx.fillText(label,letterPoint.x,letterPoint.y);
+			    ctx.fillText(label,letterPoint.x,letterPoint.y);
 			}
 
 			function drawAlphabet() { // drawing the beauty of the alphabet
