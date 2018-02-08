@@ -1,4 +1,4 @@
-<html>
+<html> <!-- Hello dear progreammer, welcome to my code, hope you like it! -->
 	<head>
 		<!-- Jquery -->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -12,21 +12,15 @@
 		<!-- Color picker -->
 		<script src="jscolor.js"></script>
 
+		<!-- Awesome and fancy animated background -->
 		<script src="particles.js"></script>
 	
+		<!-- Life is too short to separate style, content and script in other files for small projects -->
 		<style type="text/css">
-			body {
-			
-			}
-
 			.container {
 			    max-width: 800px;  
 			    padding-left: 25px; 
 			    padding-right: 25px; 
-			}
-
-			#result{
-				color: teal;
 			}
 
 			#particles-js {
@@ -45,6 +39,22 @@
 			  	padding: 0.5em;
 			}
 
+			#jscolor{
+				text-align: center;
+				max-width: 100px;
+			}
+
+			#input{
+				text-align: center;
+				max-width: 500px;
+			}
+
+			#canvasdiv{
+				margin: 5px; 
+				height: 600px; 
+				width: 100%;
+			}
+
 			a {
 				color: inherit;
 			}
@@ -54,33 +64,34 @@
 			}
 		</style>
 	</head>
-	<body>
+	<body> <!-- Shake it -->
 		<center>
-			<div id="particles-js"></div>
+			<div id="particles-js"></div> <!-- It is magical -->
 			<div class="container">
-				<div id="canvasdiv" style="margin: 5px; height: 600px; width: 100%;">
-					<canvas id="myCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
+				<h3>CREN DESBRAVALLEY!</h3>
+				<div id="canvasdiv">
+					<canvas id="myCanvas">Your browser does not support the HTML5 canvas tag.</canvas> <!-- what a shame -->
 				</div>
 				<form>
 				  <input type="text" id="input" name="input" placeholder="Digite o nome aqui">
 				</form>
-					Selecione a cor<br>
-					<input class="jscolor" onchange="update(this.jscolor)" value="000000"><br><br>
+					<strong>Selecione a cor</strong><br>
+					<input id="jscolor" class="jscolor" onchange="update(this.jscolor)" value="000000"><br><br>
 				  <button class="waves-effect waves-light btn" onclick="submitButton()" title="Por enquanto nao funciona no Google Chrome, malz aí..." >Gerar imagem</button>
 			</div>
 		</center>
-				  <p id="footer">Developed by <strong><a href="http://mourodrigo.com">mourodrigo.com</a></strong></p>
+				  <p id="footer">Developed by <strong><a href="http://mourodrigo.com">mourodrigo.com</a></strong></p> <!-- what a shame -->
 	</body>
 	<script type="text/javascript">
 
-	var point = class point {
+	var point = class point { // and then he said: "BEHOLD THE CLASSES"
   		constructor(x, y) { 
 		    this.x = x;
 		    this.y = y;
   		}
 	};
 
-	var pointLetter = class pointLetter {
+	var pointLetter = class pointLetter { 
   		constructor(letterLabel, dotPoint, labelPoint) { 
 		    this.letterLabel = letterLabel;
 		    this.dotPoint = dotPoint;
@@ -98,7 +109,7 @@
 
 
 	};
-			//Define Variables
+			// and after that, the variables was born
 			var alphabet = "GHIJKLMNOPQRSTUVWXYZABCDEF";
 			var numbers = "1234567890";
 			var defaultLetterLabelDistance = 0.1;
@@ -111,42 +122,40 @@
 			var fillColor = 'black';
 
 
-			var $canvasDiv = $('#canvasdiv');
+			var $canvasDiv = $('#canvasdiv'); //and the jquery presented itself to help the lord
 
 			var c = document.getElementById("myCanvas");
 			c.height = $canvasDiv.innerHeight();
 			c.width = $canvasDiv.innerWidth();
 
-
+			//and the lord wants to find his balance
 			var center_x = c.width/2;
 			var center_y = c.height/2;
 
-			var ctx = c.getContext("2d");
+			var ctx = c.getContext("2d"); //and prepared to create his art
 
 
-			function drawCircle(radius){
+			function drawCircle(radius){ //so he created the simpliest of the forms
 				var ctx2 = c.getContext("2d");
 			    ctx2.beginPath();
 			    ctx2.arc(center_x, center_y, radius, 0, 2 * Math.PI);
 			    ctx2.fillStyle = fillColor;
-			    // ctx2.fill();
-				// ctx2.lineWidth=3;
 			}
 
-			function pointFor(radius, angle,distance){
+			function pointFor(radius, angle,distance){ //and calculated using all his deep knowledges in algebra
 			    var x = center_x + radius * Math.cos(+angle*Math.PI/180) * distance;
 			    var y = center_y + radius * Math.sin(+angle*Math.PI/180) * distance;
 				return new point(x,y);
 			}
 
-			function drawDotAt(point) {
+			function drawDotAt(point) { // and places all the dots on his places
 			    ctx.beginPath();
 				ctx.fillColor = "black";
 			    ctx.arc(point.x, point.y, point_size, 0, 2 * Math.PI);
 			    ctx.fill();
 			}
 
-			function drawLetterAt(radius, angle,distance,label){
+			function drawLetterAt(radius, angle,distance,label){ // and instructed each charactere on his own image
 			    var point = pointFor(radius, angle, distance);
 			    var letterPoint = pointFor(radius, angle, distance+0.3);
 
@@ -156,7 +165,7 @@
 			    ctx.fillText(label,letterPoint.x,letterPoint.y);
 			}
 
-			function drawAlphabet() {
+			function drawAlphabet() { // drawing the beauty of the alphabet
 				for (var i = 0; i < alphabet.length; i++) {
 					var aLetter = new pointLetter(
 						alphabet.charAt(i),
@@ -168,7 +177,7 @@
 				};
 			}
 
-			function drawNumbers() {
+			function drawNumbers() { // and after that, the numbers
 				for (var i = 0; i < numbers.length; i++) {
 					var aLetter = new pointLetter(
 						numbers.charAt(i),
@@ -180,7 +189,7 @@
 				};
 			}
 
-			function drawLine(from, to){
+			function drawLine(from, to){ //so he want the letters to know each other
 				console.log("drawline from ", from, " to ", to);
 				ctx.beginPath();
 				ctx.moveTo(from.dotPoint.x,from.dotPoint.y);
@@ -190,25 +199,7 @@
 				ctx.stroke();
 			}
 
-			function refresh(){
-				pointLetters = [];
-				ctx.clearRect(0, 0, c.width, c.height);
-				drawAlphabet();
-				drawNumbers();
-    			drawCircle(radius_circle_1);
-				var input = document.querySelector('input');
-				generateDraw(input.value.toUpperCase());
-			}
-
-			function submitButton(){
-				ctx.clearRect(0, 0, c.width, c.height);
-				var input = document.querySelector('input');
-				drawCircle(radius_circle_1);
-				generateDraw(input.value.toUpperCase());	
-				 window.location = c.toDataURL("image/png");
-			}
-
-			function generateDraw(string){
+			function generateDraw(string){ // by the art of lords code
 				var last = -1
 				for (var i = 0; i < string.length; i++) {
 					var res = string.substring(i, i+1);
@@ -226,43 +217,49 @@
 				};
 			}
 
-			//Execution
+			function refresh(){ // and for all this nature to be alive
+				pointLetters = [];
+				ctx.clearRect(0, 0, c.width, c.height);
+				drawAlphabet();
+				drawNumbers();
+    			drawCircle(radius_circle_1);
+				var input = document.querySelector('input');
+				generateDraw(input.value.toUpperCase());
+			}
+
+			function submitButton(){ // and to be shared to other human beings 
+				ctx.clearRect(0, 0, c.width, c.height);
+				var input = document.querySelector('input');
+				drawCircle(radius_circle_1);
+				generateDraw(input.value.toUpperCase());	
+				window.location = c.toDataURL("image/png");
+			}
+
+			//so then it starts....
 			refresh();
-			console.log(pointLetters);
 
 		</script>
 
 		<script>
-			var input = document.querySelector('input');
+			var input = document.querySelector('input'); //and the lord knows about people say to him
 
-			input.addEventListener('input', function()
+			input.addEventListener('input', function() //and listen to them, everytime
 			{
 				var inputValue = input.value
 			    console.log('input changed to: ', inputValue);
 			    refresh();
 			});
 
-			function update(jscolor) {
-		    // 'jscolor' instance can be used as a string
+			function update(jscolor) { //and is always aware
 			     strokeColor = jscolor;
 			     refresh();
 			}
 
 			/* particlesJS.load(@dom-id, @path-json, @callback (optional)); */
-			particlesJS.load('particles-js', 'assets/particles.json', function() {
+			particlesJS.load('particles-js', 'assets/particles.json', function() { //for all smallest particles life 
 			  console.log('callback - particles.js config loaded');
 			});
 
 
 		</script>
-</html>
-
-<!-- TODO
-	TAMANHO DO CANVAS DINAMICO
-	RETORNAR O PONTO XY DE UM ANGULO - DONE
-	MONTAR O ARRAY DO ALFABETO - DONE
-	PREENCHER O CIRCULO DE UMA COR
-	DESENHAR LINHAS DE UM PONTO A OUTRO - DONE
-	ADICIONAR INPUT DE TEXTO - DONE
-	PARA CADA LETRA DO INPUT DESENHAR A LINHA - DONE
-	EXPORTAR CANVAS
+</html> <!-- and in the seventh day, the lord rested, and opened a beer... -->
