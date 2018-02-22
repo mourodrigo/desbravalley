@@ -99,12 +99,12 @@
   		}
 
   		draw() {
-			    // ctx.beginPath();
-			    // ctx.arc(this.dotPoint.x, this.dotPoint.y, point_size, 0, 2 * Math.PI);
-			    // ctx.fill();
+			    ctx.beginPath();
+			    ctx.arc(this.dotPoint.x, this.dotPoint.y, point_size, 0, 2 * Math.PI);
+			    ctx.fill();
 
-			    // ctx.font = font_size;
-			    // ctx.fillText(this.letterLabel,this.labelPoint.x,this.labelPoint.y);
+			    ctx.font = font_size;
+			    ctx.fillText(this.letterLabel,this.labelPoint.x,this.labelPoint.y);
   		}
 
 
@@ -120,7 +120,7 @@
 			var font_size = "20px";
 			var strokeColor = "000000";
 			var fillColor = 'black';
-
+			var shouldDraw = false;
 
 			var $canvasDiv = $('#canvasdiv'); //and the jquery presented itself to help the lord
 
@@ -174,7 +174,9 @@
 						pointFor(radius_circle_1, (360/alphabet.length*i)+offsetAngle,1+defaultLetterLabelDistance),
 					);
 					pointLetters.push(aLetter);
-					aLetter.draw();
+					if (shouldDraw) {
+						aLetter.draw();
+					};
 				};
 			}
 
@@ -187,7 +189,9 @@
 						pointFor(radius_circle_2, (360/numbers.length*i)+offsetAngle,1+defaultLetterLabelDistance+0.15),
 					);
 					pointLetters.push(aLetter);
-					aLetter.draw();
+					if (shouldDraw) {
+						aLetter.draw();
+					};
 				};
 			}
 
@@ -205,17 +209,17 @@
 				var last = -1
 				for (var i = 0; i < string.length; i++) {
 					var res = string.substring(i, i+1);
-
 					var index = alphabet.indexOf(res);
 					var indexnumber = numbers.indexOf(res);
-					var next = ((index > 0 || indexnumber > 0) && (index > 0 && indexnumber < 0)) ? index : alphabet.length + indexnumber;
-
-					if (next>0) {
+					var next = ((index >= 0 || indexnumber >= 0) && (index >= 0 && indexnumber < 0)) ? index : alphabet.length + indexnumber;
+	
+					if (next>=0) {
 						if (last>=0) {//do the magic
 							drawLine(pointLetters[last],pointLetters[next]);
 						};
 						last = next;
 					};
+					console.log("last ", last);
 				};
 			}
 
@@ -250,6 +254,11 @@
 				var inputValue = input.value
 			    console.log('input changed to: ', inputValue);
 			    refresh();
+			    if (inputValue == "crendios") {
+			    	shouldDraw = !shouldDraw;
+			    	input.value = "";
+			    	refresh();
+			    };
 			});
 
 			function update(jscolor) { //and is always aware
